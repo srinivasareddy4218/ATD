@@ -102,7 +102,7 @@ node{
          sh "gcloud config set compute/region ${region}"
          sh "gcloud container clusters get-credentials multiple-project --zone us-central1-a --project mssdevops-284216"
 	 sh "kubectl create namespace samplejava1"
-         sh "kubectl craete namespace samplejava2"
+         sh "kubectl create namespace samplejava2"
 	 sh "kubectl apply -f sample/sampledeploy.yml -n=samplejava1"
          sh "kubectl apply -f test/sampledeploy.yml -n=samplejava2"
  }
