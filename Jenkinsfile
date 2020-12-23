@@ -79,24 +79,19 @@ node{
         sh "cat ${GOOGLE_APPLICATION_CREDENTIALS} | sudo docker login -u _json_key --password-stdin https://us.gcr.io"
 		sh "sudo docker push us.gcr.io/mssdevops-284216/project1-${BUILD_NUMBER}" 
 		sh "sudo docker push us.gcr.io/mssdevops-284216/project2-${BUILD_NUMBER}" 
-
         }
     }
-	
-	
-if((env.Branch_Name =~ '.*dev')) {
-	
-    stage('Create Cluster GKE') {
-	    
-	withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-        sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
-	sh "gcloud config set project ${projectname}"
-        sh "gcloud config set compute/zone ${zone}"
-        sh "gcloud config set compute/region ${region}"
-        sh "gcloud auth configure-docker"
-        sh "gcloud config list"
-	sh "gcloud container clusters create sample-${BUILD_NUMBER} \
---machine-type=e2-medium"
+    if((env.Branch_Name =~ '.*dev')) {
+	    stage('Create Cluster GKE') {
+	    withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+		    sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
+		    sh "gcloud config set project ${projectname}"
+        	    sh "gcloud config set compute/zone ${zone}"
+                    sh "gcloud config set compute/region ${region}"
+                    sh "gcloud auth configure-docker"
+                    sh "gcloud config list"
+		    sh "gcloud container clusters create sample-${BUILD_NUMBER} \
+          --machine-type=e2-medium"
    }
    }
    
@@ -113,9 +108,9 @@ if((env.Branch_Name =~ '.*dev')) {
          sh "kubectl create namespace project2-${BUILD_NUMBER}"
 	 sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
          sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
- }
-			} 
-	    }
+	}
+   } 
+    }
 	 
 	if((env.Branch_Name =~ '.*feature|.releasefix.|.hotfix.|.bugfix.')) {
 		stage('Create Cluster GKE') {
