@@ -83,7 +83,7 @@ node{
 	
 	
 if((env.Branch_Name =~ '.*dev')) {
-	parallel(
+	
     stage('Create Cluster GKE') {
 	    
 	withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -96,7 +96,7 @@ if((env.Branch_Name =~ '.*dev')) {
 	sh "gcloud container clusters create sample-${BUILD_NUMBER} \
 --machine-type=e2-medium"
    }
-   },
+   }
    
      
    stage('Deploy to kubernetes'){
@@ -112,7 +112,7 @@ if((env.Branch_Name =~ '.*dev')) {
 	 sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
          sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
  }
-			} )
+			} 
 	    }
 	 
 	if((env.Branch_Name =~ '.feature.|.releasefix.|.hotfix.|.bugfix.')) {
