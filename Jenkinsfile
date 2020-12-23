@@ -23,36 +23,36 @@ node{
 	})
     }
 
-    stage ('Publish Test Results'){
-      parallel(
-        Project1: {
-          parallel(
-	    publishJunitTestsResultsToJenkins: {
-              echo "Publish junit Tests Results"
-	      cd sample
-	      junit '**/target/surefire-reports/TEST-*.xml'
-	      archive 'target/*.jar'
-            },
-            publishJunitTestsResultsToSonar: {
-              echo "This is branch test"
-            })
-	},
+    //stage ('Publish Test Results'){
+      //parallel(
+        //Project1: {
+          //parallel(
+	    //publishJunitTestsResultsToJenkins: {
+              //echo "Publish junit Tests Results"
+	      //cd sample
+	      //junit '**/target/surefire-reports/TEST-*.xml'
+	      //archive 'target/*.jar'
+            //},
+            //publishJunitTestsResultsToSonar: {
+              //echo "This is branch test"
+            //})
+	//},
 		
-	Project2: {
-          parallel(
-	    publishJunitTestsResultsToJenkins: {
-              echo "Publish junit Tests Results"
-	      cd test
-	      junit '**/target/surefire-reports/TEST-*.xml'
-	      archive 'target/*.jar'
-            },
-            publishJunitTestsResultsToSonar: {
+	//Project2: {
+          //parallel(
+	    //publishJunitTestsResultsToJenkins: {
+              //echo "Publish junit Tests Results"
+	      //cd test
+	      //junit '**/target/surefire-reports/TEST-*.xml'
+	      //archive 'target/*.jar'
+            //},
+            //publishJunitTestsResultsToSonar: {
               echo "This is branch sample"
-            })
-        }
-      )
-    }
-	
+            //})
+        //}
+      //)
+    //}
+    	
     stage('Build Docker Image'){
       parallel(
         BuildDockerImageForProject1: {
