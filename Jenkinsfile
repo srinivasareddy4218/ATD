@@ -111,6 +111,35 @@ node{
  }
 			} 
 	}
+	if((env.Branch_Name =~ '.feature.|.releasefix.|.hotfix.|.bugfix.')) {
+		stage('Create Cluster GKE') {
+	withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+        sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
+	sh "gcloud config set project ${projectname}"
+        sh "gcloud config set compute/zone ${zone}"
+        sh "gcloud config set compute/region ${region}"
+        sh "gcloud auth configure-docker"
+        sh "gcloud config list"
+	sh "gcloud container clusters create sample-${BUILD_NUMBER} \
+--machine-type=e2-medium"
+   }
+   
+     }
+   stage('Deploy to kubernetes'){
+        withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+	sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
+//Configuring the project details to Jenkins and communicate with the gke cluster
+         sh "gcloud config set project ${projectname}"
+         sh "gcloud config set compute/zone ${zone}"
+         sh "gcloud config set compute/region ${region}"
+		sh "gcloud container clusters get-credentials sammple-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
+	 sh "kubectl create namespace project1-${BUILD_NUMBER}"
+         sh "kubectl create namespace project2-${BUILD_NUMBER}"
+	 sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
+         sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
+ }
+			} 
+				
 stage ('wait_prior_starting_destroy_cluster') {
   echo 'Waiting 5 minutes for deployment to validate prior starting to destroy cluster'
   sleep 300 // seconds
@@ -124,6 +153,7 @@ stage ('wait_prior_starting_destroy_cluster') {
          sh "gcloud config set compute/region ${region}"
          sh "gcloud container clusters get-credentials sample-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
 	 sh "gcloud container -q clusters delete sample-${BUILD_NUMBER} --zone=${zone}"
+	}
 	}
 	}
 
