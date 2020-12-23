@@ -30,12 +30,12 @@ node{
           parallel(
 	    publishJunitTestsResultsToJenkins: {
               echo "Publish junit Tests Results"
-	      sh "cd sample"
-	      junit '**/target/surefire-reports/TEST-*.xml'
+	      sh "cd sample" 
+	      junit 'sample/target/surefire-reports/TEST-*.xml'
 	      archive 'target/*.jar'
             },
             publishJunitTestsResultsToSonar: {
-              echo "This is branch test"
+              echo "This is branch sample"
             })
 	},
 		
@@ -43,12 +43,11 @@ node{
           parallel(
 	    publishJunitTestsResultsToJenkins: {
               echo "Publish junit Tests Results"
-	      sh "cd test"
-	      junit '**/target/surefire-reports/TEST-*.xml'
+	      junit 'test/target/surefire-reports/TEST-*.xml'
 	      archive 'target/*.jar'
             },
             publishJunitTestsResultsToSonar: {
-              echo "This is branch sample"
+              echo "This is branch test"
             })
         }
       )
@@ -57,13 +56,13 @@ node{
     stage('Build Docker Image'){
       parallel(
         BuildDockerImageForProject1: {
-	  sh "cd sample"
-          sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
+	  sh "cd sample && sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
+          //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
 	},	
         
 	BuildDockerImageForProject2: {
-          sh "cd test"
-	  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		
+          sh "cd test %% sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
+	  //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		
 	})
     }
     
