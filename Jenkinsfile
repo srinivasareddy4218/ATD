@@ -131,7 +131,7 @@ node{
          sh "gcloud config set project ${projectname}"
          sh "gcloud config set compute/zone ${zone}"
          sh "gcloud config set compute/region ${region}"
-		sh "gcloud container clusters get-credentials sammple-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
+		sh "gcloud container clusters get-credentials sample-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
 	 sh "kubectl create namespace project1-${BUILD_NUMBER}"
          sh "kubectl create namespace project2-${BUILD_NUMBER}"
 	 sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
