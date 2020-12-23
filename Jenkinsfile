@@ -61,7 +61,7 @@ node{
 	},	
         
 	BuildDockerImageForProject2: {
-          sh "cd test && sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."
+		sh "cd test && sudo docker build -t us.gcr.io/mssdevops-284216/sample-${BUILDNUMBER} ."
           echo "This is project2 image"
 	})
     }
@@ -75,8 +75,8 @@ node{
         sh "gcloud auth configure-docker"
         sh "gcloud config list"
         sh "cat ${GOOGLE_APPLICATION_CREDENTIALS} | sudo docker login -u _json_key --password-stdin https://us.gcr.io"
-        sh "sudo docker push us.gcr.io/mssdevops-284216/sample-java1" 
-        sh "sudo docker push us.gcr.io/mssdevops-284216/sample-java2" 
+		sh "sudo docker push us.gcr.io/mssdevops-284216/project1-${BUILDNUMBER}" 
+		sh "sudo docker push us.gcr.io/mssdevops-284216/Project2-${BUILDNUMBER}" 
 
         }
     }
@@ -88,7 +88,7 @@ node{
         sh "gcloud config set compute/region ${region}"
         sh "gcloud auth configure-docker"
         sh "gcloud config list"
-	sh "gcloud container clusters create multiple-project \
+		sh "gcloud container clusters create sample-${BUILDNUMBER} \
 --machine-type=e2-medium"
    }
    
@@ -103,8 +103,8 @@ node{
          sh "gcloud container clusters get-credentials multiple-project --zone us-central1-a --project mssdevops-284216"
 	 sh "kubectl create namespace samplejava1"
          sh "kubectl create namespace samplejava2"
-	 sh "kubectl apply -f sample/sampledeploy.yml -n=samplejava1"
-         sh "kubectl apply -f test/sampledeploy.yml -n=samplejava2"
+		sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILDNUMBER}"
+		sh "kubectl apply -f test/sampledeploy.yml -n=PROJECT2-${BUILDNUMBER}"
  }
 			} 
 }
