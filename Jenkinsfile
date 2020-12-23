@@ -7,9 +7,10 @@ node{
     // ip address of the docker private repository(nexus)
    
 	
-    //stage('SCM Checkout'){
+    stage('SCM Checkout'){
+      git credentialsId: 'LohitaGithub', url: 'https://github.com/Lohita20/ATD.git'
         //git credentialsId: 'aabc9fb7-0647-4c60-93ce-e92eeabb6252', url: 'https://github.com/Lohita20/ATD.git'
-    //}
+    }
     stage('Build Docker Image'){
       sh "pwd"
       sh "ls -al"
