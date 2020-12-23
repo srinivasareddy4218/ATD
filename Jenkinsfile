@@ -104,7 +104,7 @@ node{
 	 sh "kubectl create namespace samplejava1"
          sh "kubectl create namespace samplejava2"
 		sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILDNUMBER}"
-		sh "kubectl apply -f test/sampledeploy.yml -n=PROJECT2-${BUILDNUMBER}"
+		sh "kubectl apply -f test/sampledeploy.yml -n=PROJECT2-${BUILDNUMBER}" 
  }
 			} 
 }
