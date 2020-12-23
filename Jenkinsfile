@@ -3,8 +3,7 @@ node{
     def mvnHome = tool 'maven-3.3.9'
       // holds referennode{
      
-    def mvnHome = tool 'maven-3.3.9'
-      // holds reference to docker image
+          // holds reference to docker image
     def dockerImage
     // ip address of the docker private repository(nexus)
    
