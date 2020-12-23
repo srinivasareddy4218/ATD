@@ -11,7 +11,7 @@ node{
     //}
     stage('Build Project') {
       // build project via maven
-      //cd sample
+      sh cd sample
       echo pwd
       sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
       echo "Single Build"
