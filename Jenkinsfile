@@ -110,7 +110,7 @@ node{
          sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
  }
 			} 
-	}
+	} else {
 	if((env.Branch_Name =~ '.feature.|.releasefix.|.hotfix.|.bugfix.')) {
 		stage('Create Cluster GKE') {
 	withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -156,6 +156,6 @@ stage ('wait_prior_starting_destroy_cluster') {
 	}
 	}
 	}
-
+	}
 	}
     
