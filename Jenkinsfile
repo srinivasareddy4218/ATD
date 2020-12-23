@@ -20,13 +20,13 @@ node{
     //stage('Build Project'){
       //parallel(
         //Project1: {
-          //cd sample
+          //sh "cd sample"
 	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
           //echo "Executed Successfully Project1"
 	//},
 		
 	//Project2: {
-	  //cd test
+	  //sh "cd test"
 	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
           //echo "Executed Successfully Project2"
 	//})
@@ -38,7 +38,7 @@ node{
           //parallel(
 	    //publishJunitTestsResultsToJenkins: {
               //echo "Publish junit Tests Results"
-	      //cd sample
+	      //sh "cd sample"
 	      //junit '**/target/surefire-reports/TEST-*.xml'
 	      //archive 'target/*.jar'
             //},
@@ -51,12 +51,12 @@ node{
           //parallel(
 	    //publishJunitTestsResultsToJenkins: {
               //echo "Publish junit Tests Results"
-	      //cd test
+	      //sh "cd test"
 	      //junit '**/target/surefire-reports/TEST-*.xml'
 	      //archive 'target/*.jar'
             //},
             //publishJunitTestsResultsToSonar: {
-              echo "This is branch sample"
+              //echo "This is branch sample"
             //})
         //}
       //)
@@ -65,12 +65,12 @@ node{
     //stage('Build Docker Image'){
       //parallel(
         //BuildDockerImageForProject1: {
-	  //cd sample
+	  //sh "cd sample"
           //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
 	//},	
         
 	//BuildDockerImageForProject2: {
-          //cd test
+          //sh "cd test"
 	  //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		
 	//})
     //}
