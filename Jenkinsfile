@@ -12,6 +12,7 @@ node{
     //}
     stage('Build Docker Image'){
       sh "pwd"
+      sh "ls -al"
       //echo "This is start $(pwd)"
       //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java ."
      }
