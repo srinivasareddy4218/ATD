@@ -13,7 +13,7 @@ node{
       // build project via maven
       //sh "cd sample"
       //echo pwd
-      sh "'sample/${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+      sh "'sample ${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
       echo "Single Build"
     }
 	
