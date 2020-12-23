@@ -95,6 +95,7 @@ if((env.Branch_Name =~ '.*dev')) {
         sh "gcloud config list"
 	sh "gcloud container clusters create sample-${BUILD_NUMBER} \
 --machine-type=e2-medium"
+   }
    },
    
      
