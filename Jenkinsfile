@@ -12,63 +12,61 @@ node{
  
     stage('Build Project'){
       parallel(
-	    'Project1': {
-		  cd sample
-		  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
-		},
+        Project1: {
+          cd sample
+	  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+	},
 		
-		'Project2': {
-		  cd test
-		  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
-		})
-	}
+	Project2: {
+	  cd test
+	  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+	})
+    }
 
     stage ('Publish Test Results'){
-	  parallel(
-	    'Project1': {
-		  parallel(
-		    publishJunitTestsResultsToJenkins: {
+      parallel(
+        Project1: {
+          parallel(
+	    publishJunitTestsResultsToJenkins: {
               echo "Publish junit Tests Results"
-			  cd sample
-		      junit '**/target/surefire-reports/TEST-*.xml'
-		      archive 'target/*.jar'
+	      cd sample
+	      junit '**/target/surefire-reports/TEST-*.xml'
+	      archive 'target/*.jar'
             },
             publishJunitTestsResultsToSonar: {
               echo "This is branch test"
             })
-		},
+	},
 		
-		'Project2': {
-		  parallel(
-		    publishJunitTestsResultsToJenkins: {
+	Project2: {
+          parallel(
+	    publishJunitTestsResultsToJenkins: {
               echo "Publish junit Tests Results"
-		      cd test
-			  junit '**/target/surefire-reports/TEST-*.xml'
-		      archive 'target/*.jar'
+	      cd test
+	      junit '**/target/surefire-reports/TEST-*.xml'
+	      archive 'target/*.jar'
             },
             publishJunitTestsResultsToSonar: {
               echo "This is branch sample"
             })
-		}
-	  )
-	}
+        }
+      )
+    }
 	
-	stage('Build Docker Image'){
-	  parallel(
-	    BuildDockerImageForProject1: {
-	      cd sample
-		  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
-		},
-		
-		BuildDockerImageForProject2: {
-		  cd test
-		  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."
-
-		}
-   	  )
-	}
-	
-	 stage('GCR packaging') {
+    stage('Build Docker Image'){
+      parallel(
+        BuildDockerImageForProject1: {
+	  cd sample
+          sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
+	},	
+        
+	BuildDockerImageForProject2: {
+          cd test
+	  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		}
+	})
+    }
+    
+    stage('GCR packaging') {
         withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
         sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
         sh "gcloud config set project ${projectname}"
