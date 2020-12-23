@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: mssdevops-284216
-        image: us.gcr.io/mssdevops-284216/sample-java1
+        image: us.gcr.io/mssdevops-284216/project1-23
         imagePullPolicy: Always
         ports:
         - containerPort: 80
