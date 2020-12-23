@@ -10,27 +10,27 @@ node{
       git credentialsId: 'LohitaGithub', url: 'https://github.com/Lohita20/ATD.git'
         //git credentialsId: 'aabc9fb7-0647-4c60-93ce-e92eeabb6252', url: 'https://github.com/Lohita20/ATD.git'
     }
-    stage('Build Project') {
+    //stage('Build Project') {
       //build project via maven
-      sh "cd sample && ls -al && '${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package "
+      //sh "cd sample && ls -al && '${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package "
       //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
-      echo "Single Build"
-    }
-	
-    //stage('Build Project'){
-      //parallel(
-        //Project1: {
-          //sh "cd sample"
-	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
-          //echo "Executed Successfully Project1"
-	//},
-		
-	//Project2: {
-	  //sh "cd test"
-	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
-          //echo "Executed Successfully Project2"
-	//})
+      //echo "Single Build"
     //}
+	
+    stage('Build Project'){
+      parallel(
+        Project1: {
+          sh "cd sample && ls -al && '${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package "
+	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+          echo "Executed Successfully Project1"
+	},
+		
+	Project2: {
+	  sh "cd test && ls -al && '${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package "
+	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+          echo "Executed Successfully Project2"
+	})
+    }
 
     //stage ('Publish Test Results'){
       //parallel(
