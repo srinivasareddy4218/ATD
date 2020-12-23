@@ -114,7 +114,7 @@ if((env.Branch_Name =~ '.*dev')) {
  }
 			} )
 	    }
-	} 
+	 
 	if((env.Branch_Name =~ '.feature.|.releasefix.|.hotfix.|.bugfix.')) {
 		stage('Create Cluster GKE') {
 	withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
