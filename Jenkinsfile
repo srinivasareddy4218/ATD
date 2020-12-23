@@ -10,12 +10,17 @@ node{
     //stage('SCM Checkout'){
         //git credentialsId: 'aabc9fb7-0647-4c60-93ce-e92eeabb6252', url: 'https://github.com/Lohita20/ATD.git'
     //}
-    stage('Build Project') {
+    stage('Build Docker Image'){
+      sh "cd sample"
+      sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java ."
+     }
+    
+    //stage('Build Project') {
       // build project via maven
       //sh "cd sample"
-      sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
-      echo "Single Build"
-    }
+      //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+      //echo "Single Build"
+    //}
 	
     //stage('Build Project'){
       //parallel(
