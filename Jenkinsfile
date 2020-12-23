@@ -62,7 +62,7 @@ node{
         
 	BuildDockerImageForProject2: {
           cd test
-	  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		}
+	  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		
 	})
     }
     
