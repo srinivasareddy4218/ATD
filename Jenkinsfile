@@ -11,7 +11,7 @@ node{
         //git credentialsId: 'aabc9fb7-0647-4c60-93ce-e92eeabb6252', url: 'https://github.com/Lohita20/ATD.git'
     //}
     stage('Build Docker Image'){
-      sh "cd sample"
+      echo "This is start $(pwd)"
       sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java ."
      }
     
