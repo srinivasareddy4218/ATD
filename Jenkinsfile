@@ -15,11 +15,13 @@ node{
         Project1: {
           cd sample
 	  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+          echo "Executed Successfully Project1"
 	},
 		
 	Project2: {
 	  cd test
 	  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+          echo "Executed Successfully Project2"
 	})
     }
 
