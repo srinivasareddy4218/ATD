@@ -9,21 +9,28 @@ node{
     //stage('SCM Checkout'){
         //git credentialsId: 'aabc9fb7-0647-4c60-93ce-e92eeabb6252', url: 'https://github.com/Lohita20/ATD.git'
     //}
- 
-    stage('Build Project'){
-      parallel(
-        Project1: {
-          cd sample
-	  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
-          echo "Executed Successfully Project1"
-	},
-		
-	Project2: {
-	  cd test
-	  sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
-          echo "Executed Successfully Project2"
-	})
+    stage('Build Project') {
+      // build project via maven
+      cd sample
+      echo pwd
+      sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+      echo "Single Build"
     }
+	
+    //stage('Build Project'){
+      //parallel(
+        //Project1: {
+          //cd sample
+	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+          //echo "Executed Successfully Project1"
+	//},
+		
+	//Project2: {
+	  //cd test
+	  //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package" 
+          //echo "Executed Successfully Project2"
+	//})
+    //}
 
     //stage ('Publish Test Results'){
       //parallel(
