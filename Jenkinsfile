@@ -1,6 +1,7 @@
 node{
      
     def mvnHome = tool 'maven-3.3.9'
+    //def dh = /sample
          // holds reference to docker image
     def dockerImage
     // ip address of the docker private repository(nexus)
@@ -12,8 +13,6 @@ node{
     stage('Build Project') {
       // build project via maven
       //sh "cd sample"
-      dh = sh "pwd"
-      echo dh
       sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
       echo "Single Build"
     }
