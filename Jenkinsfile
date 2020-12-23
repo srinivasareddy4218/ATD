@@ -11,19 +11,12 @@ node{
       git credentialsId: 'LohitaGithub', url: 'https://github.com/Lohita20/ATD.git'
         //git credentialsId: 'aabc9fb7-0647-4c60-93ce-e92eeabb6252', url: 'https://github.com/Lohita20/ATD.git'
     }
-    stage('Build Docker Image'){
-      sh "pwd"
-      sh "ls -al"
-      //echo "This is start $(pwd)"
-      //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java ."
-     }
-    
-    //stage('Build Project') {
-      // build project via maven
-      //sh "cd sample"
-      //sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
-      //echo "Single Build"
-    //}
+    stage('Build Project') {
+      //build project via maven
+      sh "cd sample && ls -al"
+      sh "'${mvnHome}/bin/mvn' -Dmaven.test.failure.ignore clean package"
+      echo "Single Build"
+    }
 	
     //stage('Build Project'){
       //parallel(
