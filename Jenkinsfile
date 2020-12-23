@@ -81,7 +81,7 @@ node{
         }
     }
 	
-	if((env.Branch_Name == '.master.')) {
+	if((env.Branch_Name == '.dev.')) {
 
     stage('Create Cluster GKE') {
 	withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
