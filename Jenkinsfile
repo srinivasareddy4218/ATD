@@ -62,31 +62,31 @@ node{
       //)
     //}
     	
-    stage('Build Docker Image'){
-      parallel(
-        BuildDockerImageForProject1: {
-	  cd sample
-          sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
-	},	
+    //stage('Build Docker Image'){
+      //parallel(
+        //BuildDockerImageForProject1: {
+	  //cd sample
+          //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java1 ."
+	//},	
         
-	BuildDockerImageForProject2: {
-          cd test
-	  sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		
-	})
-    }
+	//BuildDockerImageForProject2: {
+          //cd test
+	  //sh "sudo docker build -t us.gcr.io/mssdevops-284216/sample-java2 ."		
+	//})
+    //}
     
-    stage('GCR packaging') {
-        withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
-        sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
-        sh "gcloud config set project ${projectname}"
-        sh "gcloud config set compute/zone ${zone}"
-        sh "gcloud config set compute/region ${region}"
-        sh "gcloud auth configure-docker"
-        sh "gcloud config list"
-        sh "cat ${GOOGLE_APPLICATION_CREDENTIALS} | sudo docker login -u _json_key --password-stdin https://us.gcr.io"
-        sh "sudo docker push us.gcr.io/mssdevops-284216/sample-java1" 
-        sh "sudo docker push us.gcr.io/mssdevops-284216/sample-java2" 
+    //stage('GCR packaging') {
+        //withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+        //sh "gcloud auth activate-service-account --key-file=${GOOGLE_APPLICATION_CREDENTIALS}"
+        //sh "gcloud config set project ${projectname}"
+        //sh "gcloud config set compute/zone ${zone}"
+        //sh "gcloud config set compute/region ${region}"
+        //sh "gcloud auth configure-docker"
+        //sh "gcloud config list"
+        //sh "cat ${GOOGLE_APPLICATION_CREDENTIALS} | sudo docker login -u _json_key --password-stdin https://us.gcr.io"
+        //sh "sudo docker push us.gcr.io/mssdevops-284216/sample-java1" 
+        //sh "sudo docker push us.gcr.io/mssdevops-284216/sample-java2" 
 
-        }
-    }
+        //}
+    //}
 }
