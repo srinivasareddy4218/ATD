@@ -82,7 +82,7 @@ node{
     }
 	
 	
-if((env.Branch_Name =~ '.*dev')) {
+if((env.Branch_Name =~ '.*dev.|.master.')) {
 	
     stage('Create Cluster GKE') {
 	    
@@ -106,11 +106,15 @@ if((env.Branch_Name =~ '.*dev')) {
          sh "gcloud config set project ${projectname}"
          sh "gcloud config set compute/zone ${zone}"
          sh "gcloud config set compute/region ${region}"
-		sh "gcloud container clusters get-credentials sammple-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
-	 sh "kubectl create namespace project1-${BUILD_NUMBER}"
-         sh "kubectl create namespace project2-${BUILD_NUMBER}"
-	 sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
-         sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
+	 sh "gcloud container clusters get-credentials sammple-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
+	 //sh "kubectl create namespace project1-${BUILD_NUMBER}"
+         //sh "kubectl create namespace project2-${BUILD_NUMBER}"
+	 sh "kubectl create namespace samplejava1"
+	 sh "kubectl create namespace samplejava2"	
+	 //sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
+         //sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
+	 sh "kubectl apply -f sample/sampledeploy.yml"
+	 sh "kubectl apply -f test/sampledeploy.yml"	
  }
 			} 
 	    }
@@ -137,10 +141,14 @@ if((env.Branch_Name =~ '.*dev')) {
          sh "gcloud config set compute/zone ${zone}"
          sh "gcloud config set compute/region ${region}"
 		sh "gcloud container clusters get-credentials sammple-${BUILD_NUMBER} --zone ${zone} --project ${projectname}"
-	 sh "kubectl create namespace project1-${BUILD_NUMBER}"
-         sh "kubectl create namespace project2-${BUILD_NUMBER}"
-	 sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
-         sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
+	 //sh "kubectl create namespace project1-${BUILD_NUMBER}"
+         //sh "kubectl create namespace project2-${BUILD_NUMBER}"
+	  sh "kubectl create namespace samplejava1"
+	 sh "kubectl create namespace samplejava2"	
+	 //sh "kubectl apply -f sample/sampledeploy.yml -n=project1-${BUILD_NUMBER}"
+         //sh "kubectl apply -f test/sampledeploy.yml -n=project2-${BUILD_NUMBER}"
+	 sh "kubectl apply -f sample/sampledeploy.yml"
+	 sh "kubectl apply -f test/sampledeploy.yml"	
  }
 			} 
 				
